@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "codeblack-solutions": {
+      "hosting": {
+        "employees": [
+          "codeblack-solutions"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "codeblack-solutions"
+  }
+}
