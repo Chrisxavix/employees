@@ -8,6 +8,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ListEmployeesComponent } from './views/list-employees/list-employees.component';
 import { EmployeesComponent } from './views/employees/employees.component';
 import { NavbarComponent } from './views/navbar/navbar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,8 @@ import { NavbarComponent } from './views/navbar/navbar.component';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    BrowserAnimationsModule,
+    /* Material */
   ],
   providers: [],
   bootstrap: [AppComponent]
