@@ -93,8 +93,12 @@ td {
   border: 1px solid gray !important;
 }
 
+.contratacionWith {
+  width: 22%;
+}
+
 .ageWith {
-  width: 15%;
+  width: 17%;
 }
 
 /* Cabecera de la tabla */
@@ -108,9 +112,18 @@ th {
 /* Centrar la cabecera de la tabla */
 .mat-sort-header-container {
   justify-content: center !important;
-  padding-left: 20px !important;
   font-size: 10px !important;
   font-weight: bold !important;
+  display: flex;
+  flex-direction: column;
+  row-gap: 3px;
+}
+/* Sin el sort en trasacciones */
+.replace-sort {
+  text-align: center !important;
+  font-size: 10px !important;
+  font-weight: bold !important;
+  padding-bottom: 18px !important;
 }
 
 /* Paginador */
@@ -139,7 +152,15 @@ th {
   }
 
   .mat-sort-header-container {
+    flex-direction: row;
+    padding-left: 20px !important;
     font-size: 16px !important;
+  }
+
+  /* Sin el sort en trasacciones */
+  .replace-sort {
+    font-size: 16px !important;
+    padding-bottom: 0 !important;
   }
 
   .transactionAction {
