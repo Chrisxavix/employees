@@ -1,8 +1,180 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-    font-family: "Helvetica Neue", sans-serif; 
-    background-image: radial-gradient(rgb(189, 180, 180), rgb(69, 100, 104));
-    background-repeat: no-repeat;
-    height: 100vh;
-    margin: 0;
+  font-family: "Helvetica Neue", sans-serif; 
+  background-image: radial-gradient(rgb(189, 180, 180), rgb(69, 100, 104));
+  background-repeat: repeat;
+  height: 100vh;
+  margin: 0;
 }
+
+.margin {
+  margin: 10px;
+}
+
+/* ------------ View: Employees List ------------ */
+/* Transactions */
+.transactionAction {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.transactionAction:hover {
+  color: rgb(69, 100, 104);
+}
+
+/* Textos al pasar el mouse */
+.tooltip-edit, .tooltip-view, .tooltip-delete {
+  margin-top: 5px !important;
+  font-size: 10px;
+}
+
+.tooltip-edit {
+  background-color: rgba(64, 138, 50, 0.9);
+}
+
+.tooltip-view {
+  background-color: rgba(45, 125, 216, 0.9);
+}
+
+.tooltip-delete {
+  background-color: rgba(202, 48, 55, 0.9);
+}
+
+/* Button add User */
+.addUser {
+  margin-left: 10%;
+  padding-bottom: 5%;
+}
+
+.letterUser {
+  font-size: 12px;
+}
+
+/* Search */
+.search {
+  display: flex;
+  align-items: center;
+  gap: 0 10px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+.searchTitle {
+  font-size: 10px;
+  font-weight: bold;
+}
+
+/* boostrap input search */
+.input-group-text, .form-control {
+  height: 20px;
+  font-size: 10px;
+}
+
+/* Table */
+table {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  table-layout: fixed;
+  text-align: center !important;
+}
+
+/* Cuerpo de la tabla */
+td {
+  overflow: hidden;
+  width: 20%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 !important;
+  text-align: center !important;
+  font-size: 10px !important;
+  border: 1px solid gray !important;
+}
+
+.ageWith {
+  width: 15%;
+}
+
+/* Cabecera de la tabla */
+th {
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: rgb(190, 208, 211) !important;
+  border: 1px solid gray !important;
+}
+
+/* Centrar la cabecera de la tabla */
+.mat-sort-header-container {
+  justify-content: center !important;
+  padding-left: 20px !important;
+  font-size: 10px !important;
+  font-weight: bold !important;
+}
+
+/* Paginador */
+.paginator {
+  width: 79.7%;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* paginador flechas */
+.mat-button-wrapper > * { 
+  width: 20px !important;
+}
+/* paginador items */
+.mat-paginator-range-label { 
+  font-size: 10px;
+}
+/* Espaciado entre flechas y texto */
+.mat-paginator-page-size {
+  margin-top: -15px;
+}
+
+/* Para Tablets y PC */
+@media screen and (min-width: 768px) {
+  td {
+    font-size: 14px !important;
+  }
+
+  .mat-sort-header-container {
+    font-size: 16px !important;
+  }
+
+  .transactionAction {
+    font-size: 24px;
+  }
+
+  .transactionsFlex {
+    display: flex;
+    justify-content: center;
+    gap: 0 10px;
+  }
+  
+  .searchTitle {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  /* boostrap input search */
+  .input-group-text, .form-control {
+    height: 28px;
+    font-size: 16px;
+  }
+
+  /* paginador flechas */
+  .mat-button-wrapper > * { 
+    width: 25px !important;
+  }
+  /* paginador items */
+  .mat-paginator-range-label { 
+    font-size: 14px;
+  }
+  /* Espaciado entre flechas y texto */
+  .mat-paginator-page-size {
+  margin-top: 0;
+  }
+}
+/* Para Tablets y PC */
+/* ------------ View: Employees List ------------ */

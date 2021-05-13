@@ -9,6 +9,8 @@ import { ListEmployeesComponent } from './views/list-employees/list-employees.co
 import { EmployeesComponent } from './views/employees/employees.component';
 import { NavbarComponent } from './views/navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSortModule, MatTooltipModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AngularFirestoreModule,
     BrowserAnimationsModule,
     /* Material */
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatIconModule,
+    MatTooltipModule,
   ],
+  exports: [],
   providers: [],
   bootstrap: [AppComponent]
 })
