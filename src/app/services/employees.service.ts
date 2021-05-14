@@ -18,7 +18,7 @@ export class EmployeesService {
 
   /* Trae la Data de Firebase ordenada por fecha de creación */
   getDataOrderForDateCreate(): Observable<any> {
-    return this.firebase.collection('employees', ref => ref.orderBy('fechaCreacion', 'asc')).snapshotChanges();
+    return this.firebase.collection('employees', ref => ref.orderBy('dateCreate', 'asc')).snapshotChanges();
   }
 
   /* Palabras del paginador */

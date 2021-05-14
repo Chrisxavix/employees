@@ -1,10 +1,10 @@
 export interface EmployeModel {
     name: string;
     age: number;
-    contratacion: string;
+    hiring: string;
     job: string;
-    fechaCreacion?: string,
-    fechaActualizacion?: string
+    dateCreate?: string,
+    dateUpdate?: string
 }
 
 export interface EmployeeModel {

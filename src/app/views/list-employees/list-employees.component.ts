@@ -14,7 +14,7 @@ import { EmployeesService } from 'src/app/services/employees.service';
 export class ListEmployeesComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  displayedColumns: string[] = ['name', 'age', 'contratacion', 'transactions'];
+  displayedColumns: string[] = ['name', 'age', 'hiring', 'transactions'];
   dataSource = new MatTableDataSource<EmployeModel>();
   datosFirebase: any[] = [];
   constructor(

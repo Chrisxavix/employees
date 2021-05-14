@@ -20,7 +20,7 @@ export class EmployeesComponent implements OnInit {
     this.formEmployee = this.formBuilder.group({
       name: [''],
       age: [''],
-      contratacion: [''],
+      hiring: [''],
       job: ['']
     });
   }
@@ -34,10 +34,10 @@ export class EmployeesComponent implements OnInit {
       const employee: any = {
         name: this.formEmployee.value.name,
         age: this.formEmployee.value.age,
-        contratacion: this.formEmployee.value.contratacion,
+        hiring: this.formEmployee.value.hiring,
         job: this.formEmployee.value.job,
-        fechaCreacion: new Date(),
-        fechaActualizacion: new Date()
+        dateCreate: new Date(),
+        dateUpdate: new Date()
       }
       this.employeesService.saveEmployeeData(employee).then(result => {
         console.log('Usuario registrado');
