@@ -5,22 +5,6 @@ import { MatSort } from '@angular/material/sort';
 import { EmployeModel } from 'src/app/models/employe';
 import { EmployeesService } from 'src/app/services/employees.service';
 
-const employees: EmployeModel[] = [
-  { name: 'Chrisdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd', age: 12, contratacion: '12/12/12', job: 'TI'},
-  { name: 'Xavier', age: 20, contratacion: '11/04/12', job: 'Programador'},
-  { name: 'Daniel', age: 32, contratacion: '03/02/12', job: 'Diseñador'},
-  { name: 'Mary', age: 23, contratacion: '19/01/12', job: 'SEO'},
-  { name: 'Lucas', age: 89, contratacion: '14/03/12', job: 'Marketing'},
-  { name: 'Pedro', age: 40, contratacion: '12/06/12', job: 'TI'},
-  { name: 'Juan', age: 30, contratacion: '16/10/12', job: 'Seguridad'},
-  { name: 'Peter', age: 27, contratacion: '29/11/12', job: 'BD'},
-  { name: 'Teresa', age: 17, contratacion: '23/04/12', job: 'Programador'},
-  { name: 'Martha', age: 19, contratacion: '10/08/12', job: 'Marketing'},
-  { name: 'Jaz', age: 44, contratacion: '05/11/12', job: 'Marketing'},
-  { name: 'Naty', age: 33, contratacion: '01/04/12', job: 'Programador'},
-  { name: 'Jess', age: 14, contratacion: '02/09/12', job: 'BD'}
-];
-
 @Component({
   selector: 'app-list-employees',
   templateUrl: './list-employees.component.html',
@@ -31,18 +15,38 @@ export class ListEmployeesComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   displayedColumns: string[] = ['name', 'age', 'contratacion', 'transactions'];
-  dataSource = new MatTableDataSource(employees);
-
+  dataSource = new MatTableDataSource<EmployeModel>();
+  datosFirebase: any[] = [];
   constructor(
-    private employeesService: EmployeesService
+    private employeesService: EmployeesService,
   ) { }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.employeesService.translateMatPaginator(this.paginator);
+    this.getEmployees();
   }
 
+  getEmployees() {
+    this.employeesService.getDataOrderForDateCreate().subscribe((response: any) => {
+      /* Limpiar el array de datos, ya que se pueden duplicar si se eliminan desde firebase */
+      this.datosFirebase = [];
+      /* Para agarrar el id */
+      response.forEach(element => {
+        this.datosFirebase.push({
+          id: element.payload.doc.id,
+          ...element.payload.doc.data()
+        })
+      });
+      this.dataSource.data = this.datosFirebase;
+      console.log(this.dataSource.data, 'DATA');
+    }, (error) => {
+      console.log('Error:', error);
+    })
+  }
+
+  /* Filtro pot todos los campos */
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }

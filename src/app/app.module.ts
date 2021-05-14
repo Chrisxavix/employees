@@ -11,6 +11,7 @@ import { NavbarComponent } from './views/navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSortModule, MatTooltipModule } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, 
     MatSortModule,
     MatIconModule,
     MatTooltipModule,
+    ReactiveFormsModule,
   ],
   exports: [],
   providers: [],

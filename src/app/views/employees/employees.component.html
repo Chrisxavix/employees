@@ -1,1 +1,28 @@
-<p>employees works!</p>
+<section class="formBackgrpund">
+  <h1 class="titleEmployee">Crear Empleado</h1>
+
+  <form [formGroup]="formEmployee" class="example-container" (ngSubmit)="save($event)" novalidate>
+    <mat-form-field>
+      <input matInput placeholder="Escriba su nombre" formControlName="name">
+      <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Edad" formControlName="age">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Contratación" formControlName="contratacion">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Cargo" formControlName="job">
+    </mat-form-field>
+
+    <div>
+      <button type="button" routerLink="/">Volver</button> 
+      <button type="submit">Guardar</button> 
+    </div>
+    
+  </form>
+</section>
