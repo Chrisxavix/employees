@@ -39,6 +39,9 @@ export class ListEmployeesComponent implements OnInit {
           ...element.payload.doc.data()
         })
       });
+      this.datosFirebase.forEach((elemnt: any) => {
+        elemnt.age = this.employeesService.getAge(elemnt.age);
+      })
       this.dataSource.data = this.datosFirebase;
       console.log(this.dataSource.data, 'DATA');
     }, (error) => {

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EmployeesService } from 'src/app/services/employees.service';
+import { MyValidations } from 'src/app/utils/age-validation';
 
 @Component({
   selector: 'app-employees',
@@ -19,7 +20,7 @@ export class EmployeesComponent implements OnInit {
   ) {
     this.formEmployee = this.formBuilder.group({
       name: [''],
-      age: [''],
+      age: ['', MyValidations.age],
       hiring: [''],
       job: ['']
     });
@@ -39,6 +40,7 @@ export class EmployeesComponent implements OnInit {
         dateCreate: new Date(),
         dateUpdate: new Date()
       }
+      console.log(employee, 'employee???');
       this.employeesService.saveEmployeeData(employee).then(result => {
         console.log('Usuario registrado');
         this.formEmployee.reset();
