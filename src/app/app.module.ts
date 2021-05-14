@@ -10,8 +10,17 @@ import { EmployeesComponent } from './views/employees/employees.component';
 import { NavbarComponent } from './views/navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
-import { MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, MatSortModule, MatTooltipModule } from '@angular/material';
+import { 
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatPaginatorModule,
+  MatSelectModule,
+  MatSortModule,
+  MatTooltipModule } 
+from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -35,6 +44,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     MatTooltipModule,
     ReactiveFormsModule,
+    MatSelectModule,
+    HttpClientModule,
   ],
   exports: [],
   providers: [],

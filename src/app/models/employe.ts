@@ -4,7 +4,9 @@ export interface EmployeModel {
     hiring: string;
     job: string;
     dateCreate?: string,
-    dateUpdate?: string
+    dateUpdate?: string,
+    username: string,
+    country: string
 }
 
 export interface EmployeeModel {

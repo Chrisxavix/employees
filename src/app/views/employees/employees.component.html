@@ -17,7 +17,16 @@
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="Cargo" formControlName="job">
+      <mat-label>País</mat-label>
+      <mat-select formControlName="country">
+        <mat-option *ngFor="let item of dataCountryAll" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Nombre de usuario" formControlName="username">
     </mat-form-field>
 
     <div>
