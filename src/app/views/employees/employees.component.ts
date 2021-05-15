@@ -206,23 +206,27 @@ export class EmployeesComponent implements OnInit {
 
   /* Trae los datos de Firebase de acuerdo al id para setear el formulario */
   getDataFirebase() {
-    this.formEmployee.setValue({
-      name: this.getInformationFirebase.payload.data()['name'],
-      age: this.getInformationFirebase.payload.data()['age'],
-      hiring: this.getInformationFirebase.payload.data()['hiring'],
-      country: this.getInformationFirebase.payload.data()['country'],
-      username: this.getInformationFirebase.payload.data()['username'],
-      area: this.getInformationFirebase.payload.data()['area'],
-      job: this.getInformationFirebase.payload.data()['job'],
-      commission: this.getInformationFirebase.payload.data()['commission'],
-      status: this.getInformationFirebase.payload.data()['status'],
-    });
-    if (this.getInformationFirebase.payload.data()['area'] === 'technology') {
-      this.areaTechnology = true;
-    } else if (this.getInformationFirebase.payload.data()['area'] === 'administration') {
-      this.areaAdministration = true;
-      if (this.getInformationFirebase.payload.data()['job'] === 'Fundador y CEO') {
-        this.founderAndCeo = true;
+    if (this.getInformationFirebase.payload.data()) {
+      this.formEmployee.setValue({
+        name: this.getInformationFirebase.payload.data()['name'],
+        age: this.getInformationFirebase.payload.data()['age'],
+        hiring: this.getInformationFirebase.payload.data()['hiring'],
+        country: this.getInformationFirebase.payload.data()['country'],
+        username: this.getInformationFirebase.payload.data()['username'],
+        area: this.getInformationFirebase.payload.data()['area'],
+        job: this.getInformationFirebase.payload.data()['job'],
+        commission: this.getInformationFirebase.payload.data()['commission'],
+        status: this.getInformationFirebase.payload.data()['status'],
+      });
+      if (this.getInformationFirebase.payload.data()['area'] === 'technology') {
+        this.areaTechnology = true;
+        this.areaAdministration = false;
+      } else if (this.getInformationFirebase.payload.data()['area'] === 'administration') {
+        this.areaAdministration = true;
+        this.areaTechnology = false;
+        if (this.getInformationFirebase.payload.data()['job'] === 'Fundador y CEO') {
+          this.founderAndCeo = true;
+        }
       }
     }
   }
