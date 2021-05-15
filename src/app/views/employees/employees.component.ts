@@ -21,7 +21,11 @@ export class EmployeesComponent implements OnInit {
   arrayCommission = ['0%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%'];
   founderAndCeo = false;
   id: string | null;
+  idView: string | null;
   titleEmployee = 'Crear Empleado';
+  getInformationFirebase: any;
+  objectEmployee: any;
+  viewInformation = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,18 +54,24 @@ export class EmployeesComponent implements OnInit {
         this.formEmployee.get('commission').reset();
       }
     });
-    /* Sección para determinar si estoy en la ruta de crear o editar */
+    /* Sección para determinar si estoy en la ruta de crear, editar o ver */
     this.id = this.routeActivate.snapshot.paramMap.get('id');
+    this.idView = this.routeActivate.snapshot.paramMap.get('idView');
     if (this.id !== null) {
       this.titleEmployee = 'Actualizar Empleado';
+    }
+    if (this.idView !== null) {
+      this.titleEmployee = 'Ver Empleado';
     }
   }
 
   ngOnInit() {
     this.getAllCountries();
     this.getEmployee();
+    this.viewEmployee();
   }
 
+  /* Traer data de paises del endpoint */
   getAllCountries() {
     this.countriesService.getAll().then((response: any) => {
       this.dataCountryAll = response.map(item => {
@@ -72,6 +82,7 @@ export class EmployeesComponent implements OnInit {
     })
   }
 
+  /* Seleccionar del radio button el area */
   areaSelect(item) {
     if (item.value === 'administration') {
       this.areaAdministration = true;
@@ -90,6 +101,7 @@ export class EmployeesComponent implements OnInit {
     }
   }
 
+  /* Visualizar la opción de comisión */
   jobSelect(item) {
     if (item === 'Fundador y CEO') {
       this.founderAndCeo = true;
@@ -98,6 +110,13 @@ export class EmployeesComponent implements OnInit {
     }
   }
 
+  /**
+   * Ejecución del método del submit del formulario
+   * Reutilizar formulario para editar o crear
+   * this.id: recojo de la ruta, si es nulo estoy creado, si tiene un valor (id:string) es para editar
+   * even.preventDefault(): Evento por default de html es recargar la página, con el preventDefault
+    se asegura que no lo haga
+   */
   save(event: Event) {
     event.preventDefault();
     if (this.id === null) {
@@ -107,22 +126,11 @@ export class EmployeesComponent implements OnInit {
     }
   }
 
+  /* Crear el empleado */
   createEmployee() {
     if (this.formEmployee.valid) {
-      const employee: any = {
-        name: this.formEmployee.value.name,
-        age: this.formEmployee.value.age,
-        hiring: this.formEmployee.value.hiring,
-        area: this.formEmployee.value.area,
-        job: this.formEmployee.value.job,
-        commission: this.formEmployee.value.commission,
-        username: this.formEmployee.value.username,
-        country: this.formEmployee.value.country,
-        status: this.formEmployee.value.status,
-        dateCreate: new Date(),
-        dateUpdate: new Date()
-      }
-      this.employeesService.saveEmployeeData(employee).then(result => {
+      this.createObject();
+      this.employeesService.saveEmployeeData(this.objectEmployee).then(result => {
         console.log('Usuario registrado');
         this.formEmployee.reset();
         this.router.navigate(['/employees-list']);
@@ -132,21 +140,11 @@ export class EmployeesComponent implements OnInit {
     }
   }
 
+  /* Actualizar registro */
   updateEmployee(id: string) {
     if (this.formEmployee.valid) {
-      const employee: any = {
-        name: this.formEmployee.value.name,
-        age: this.formEmployee.value.age,
-        hiring: this.formEmployee.value.hiring,
-        area: this.formEmployee.value.area,
-        job: this.formEmployee.value.job,
-        commission: this.formEmployee.value.commission,
-        username: this.formEmployee.value.username,
-        country: this.formEmployee.value.country,
-        status: this.formEmployee.value.status,
-        dateUpdate: new Date()
-      }
-      this.employeesService.updateEmployee(id, employee).then(response => {
+      this.createObject();
+      this.employeesService.updateEmployee(id, this.objectEmployee).then(response => {
         console.log('Actualizado');
         this.router.navigate(['/employees-list']);
       }).catch(error => {
@@ -155,33 +153,77 @@ export class EmployeesComponent implements OnInit {
     }
   }
 
-  /* Trae la data para setear el formulario */
+  /* Setea los datos para la ruta de actualizar */
   getEmployee() {
     if (this.id !== null) {
       this.employeesService.getEmployee(this.id).subscribe(response => {
-        this.formEmployee.setValue({
-          name: response.payload.data()['name'],
-          age: response.payload.data()['age'],
-          hiring: response.payload.data()['hiring'],
-          country: response.payload.data()['country'],
-          username: response.payload.data()['username'],
-          area: response.payload.data()['area'],
-          job: response.payload.data()['job'],
-          commission: response.payload.data()['commission'],
-          status: response.payload.data()['status'],
-        }
-        )
-        if (response.payload.data()['area'] === 'technology') {
-          this.areaTechnology = true;
-        } else if (response.payload.data()['area'] === 'administration') {
-          this.areaAdministration = true;
-          if (response.payload.data()['job'] === 'Fundador y CEO') {
-            this.founderAndCeo = true;
-          }
-        }
+        this.getInformationFirebase = response;
+        this.getDataFirebase();
       }, (error) => {
         console.log(error, 'Error');
       })
+    }
+  }
+
+  /* Setea los datos para la ruta de ver */
+  viewEmployee() {
+    if (this.idView !== null) {
+      this.employeesService.getEmployee(this.idView).subscribe(response => {
+        this.getInformationFirebase = response;
+        this.getDataFirebase();
+        this.formEmployee.controls['name'].disable();
+        this.formEmployee.controls['age'].disable();
+        this.formEmployee.controls['hiring'].disable();
+        this.formEmployee.controls['area'].disable();
+        this.formEmployee.controls['job'].disable();
+        this.formEmployee.controls['commission'].disable();
+        this.formEmployee.controls['username'].disable();
+        this.formEmployee.controls['country'].disable();
+        this.formEmployee.controls['status'].disable();
+        this.viewInformation = false;
+      }, (error) => {
+        console.log(error, 'Error');
+      })
+    }
+  }
+
+  /* Formar el objeto a partir de los controles del formulario para enviar a Firebase */
+  createObject() {
+    this.objectEmployee = {
+      name: this.formEmployee.value.name,
+      age: this.formEmployee.value.age,
+      hiring: this.formEmployee.value.hiring,
+      area: this.formEmployee.value.area,
+      job: this.formEmployee.value.job,
+      commission: this.formEmployee.value.commission,
+      username: this.formEmployee.value.username,
+      country: this.formEmployee.value.country,
+      status: this.formEmployee.value.status,
+      dateCreate: new Date(),
+      dateUpdate: new Date()
+    }
+  }
+
+  /* Trae los datos de Firebase de acuerdo al id para setear el formulario */
+  getDataFirebase() {
+    this.formEmployee.setValue({
+      name: this.getInformationFirebase.payload.data()['name'],
+      age: this.getInformationFirebase.payload.data()['age'],
+      hiring: this.getInformationFirebase.payload.data()['hiring'],
+      country: this.getInformationFirebase.payload.data()['country'],
+      username: this.getInformationFirebase.payload.data()['username'],
+      area: this.getInformationFirebase.payload.data()['area'],
+      job: this.getInformationFirebase.payload.data()['job'],
+      commission: this.getInformationFirebase.payload.data()['commission'],
+      status: this.getInformationFirebase.payload.data()['status'],
+    });
+    if (this.getInformationFirebase.payload.data()['area'] === 'technology') {
+      this.areaTechnology = true;
+    } else if (this.getInformationFirebase.payload.data()['area'] === 'administration') {
+      this.areaAdministration = true;
+      if (this.getInformationFirebase.payload.data()['job'] === 'Fundador y CEO') {
+        this.founderAndCeo = true;
+      }
     }
   }
 }

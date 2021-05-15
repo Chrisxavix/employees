@@ -36,8 +36,7 @@
     </mat-form-field>
 
     <div>
-      Estado: 
-      <mat-slide-toggle color="primary" formControlName="status"></mat-slide-toggle>
+      <mat-slide-toggle color="primary" formControlName="status" labelPosition="before">Estado</mat-slide-toggle>
     </div>
 
     <br><br>
@@ -78,7 +77,9 @@
 
     <div>
       <button type="button" routerLink="/">Volver</button> 
-      <button type="submit" [disabled]="formEmployee.invalid">Guardar</button>
+      <div *ngIf="viewInformation">
+        <button type="submit" [disabled]="formEmployee.invalid">Guardar</button>
+      </div>
       <!-- <button type="submit">Guardar</button>  -->
     </div>
   </form>
