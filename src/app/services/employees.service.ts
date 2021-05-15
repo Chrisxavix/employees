@@ -22,6 +22,21 @@ export class EmployeesService {
     return this.firebase.collection('employees', ref => ref.orderBy('dateCreate', 'asc')).snapshotChanges();
   }
 
+  /* Eliminar una empleado */
+  deleteEmployee(id: string): Promise<any> {
+    return this.firebase.collection('employees').doc(id).delete();
+  }
+
+  /* Trae la data para editar */
+  getEmployee(id: string): Observable<any> {
+    return this.firebase.collection('employees').doc(id).snapshotChanges();
+  }
+
+  /* Editar Empleado */
+  updateEmployee(id: string, employee: EmployeeModel): Promise<any> {
+    return this.firebase.collection('employees').doc(id).update(employee);
+  }
+
   /* Palabras del paginador */
   translateMatPaginator(paginator: MatPaginator) {
     paginator._intl.firstPageLabel = 'Página inicial';

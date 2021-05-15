@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CountriesService } from 'src/app/services/countries.service';
 import { EmployeesService } from 'src/app/services/employees.service';
 import { MyValidations } from 'src/app/utils/age-validation';
@@ -18,14 +18,17 @@ export class EmployeesComponent implements OnInit {
   areaTechnology = false;
   arrayAdministration = ['Fundador y CEO', 'Recursos Humanos'];
   arrayTechnology = ['Programador', 'Diseñador'];
-  arrayCommission = ['0%','10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%'];
+  arrayCommission = ['0%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%'];
   founderAndCeo = false;
+  id: string | null;
+  titleEmployee = 'Crear Empleado';
 
   constructor(
     private formBuilder: FormBuilder,
     private employeesService: EmployeesService,
     private countriesService: CountriesService,
     private router: Router,
+    private routeActivate: ActivatedRoute,
   ) {
     this.formEmployee = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
@@ -47,10 +50,16 @@ export class EmployeesComponent implements OnInit {
         this.formEmployee.get('commission').reset();
       }
     });
+    /* Sección para determinar si estoy en la ruta de crear o editar */
+    this.id = this.routeActivate.snapshot.paramMap.get('id');
+    if (this.id !== null) {
+      this.titleEmployee = 'Actualizar Empleado';
+    }
   }
 
   ngOnInit() {
     this.getAllCountries();
+    this.getEmployee();
   }
 
   getAllCountries() {
@@ -91,6 +100,14 @@ export class EmployeesComponent implements OnInit {
 
   save(event: Event) {
     event.preventDefault();
+    if (this.id === null) {
+      this.createEmployee();
+    } else {
+      this.updateEmployee(this.id);
+    }
+  }
+
+  createEmployee() {
     if (this.formEmployee.valid) {
       const employee: any = {
         name: this.formEmployee.value.name,
@@ -105,13 +122,65 @@ export class EmployeesComponent implements OnInit {
         dateCreate: new Date(),
         dateUpdate: new Date()
       }
-      console.log(employee, 'objeto a guardar en la bd');
       this.employeesService.saveEmployeeData(employee).then(result => {
         console.log('Usuario registrado');
         this.formEmployee.reset();
-        this.router.navigate(['/employees-list'])
+        this.router.navigate(['/employees-list']);
       }).catch(error => {
         console.log(error);
+      })
+    }
+  }
+
+  updateEmployee(id: string) {
+    if (this.formEmployee.valid) {
+      const employee: any = {
+        name: this.formEmployee.value.name,
+        age: this.formEmployee.value.age,
+        hiring: this.formEmployee.value.hiring,
+        area: this.formEmployee.value.area,
+        job: this.formEmployee.value.job,
+        commission: this.formEmployee.value.commission,
+        username: this.formEmployee.value.username,
+        country: this.formEmployee.value.country,
+        status: this.formEmployee.value.status,
+        dateUpdate: new Date()
+      }
+      this.employeesService.updateEmployee(id, employee).then(response => {
+        console.log('Actualizado');
+        this.router.navigate(['/employees-list']);
+      }).catch(error => {
+        console.log(error, 'Error');
+      })
+    }
+  }
+
+  /* Trae la data para setear el formulario */
+  getEmployee() {
+    if (this.id !== null) {
+      this.employeesService.getEmployee(this.id).subscribe(response => {
+        this.formEmployee.setValue({
+          name: response.payload.data()['name'],
+          age: response.payload.data()['age'],
+          hiring: response.payload.data()['hiring'],
+          country: response.payload.data()['country'],
+          username: response.payload.data()['username'],
+          area: response.payload.data()['area'],
+          job: response.payload.data()['job'],
+          commission: response.payload.data()['commission'],
+          status: response.payload.data()['status'],
+        }
+        )
+        if (response.payload.data()['area'] === 'technology') {
+          this.areaTechnology = true;
+        } else if (response.payload.data()['area'] === 'administration') {
+          this.areaAdministration = true;
+          if (response.payload.data()['job'] === 'Fundador y CEO') {
+            this.founderAndCeo = true;
+          }
+        }
+      }, (error) => {
+        console.log(error, 'Error');
       })
     }
   }

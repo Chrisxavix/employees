@@ -49,6 +49,15 @@ export class ListEmployeesComponent implements OnInit {
     })
   }
 
+  /* Eliminar Empleado */
+  deleteEmployee(id: string) {
+    this.employeesService.deleteEmployee(id).then(() => {
+      console.log(id, 'eliminado');
+    }, (error) => {
+      console.log(error, 'eliminación erronea');
+    })
+  }
+
   /* Filtro pot todos los campos */
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
