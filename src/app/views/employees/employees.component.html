@@ -4,16 +4,20 @@
   <form [formGroup]="formEmployee" class="example-container" (ngSubmit)="save($event)" novalidate>
     <mat-form-field>
       <input matInput placeholder="Escriba su nombre" formControlName="name">
-      <!-- <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error> -->
+      <mat-error *ngIf="formEmployee.get('name').errors?.required && formEmployee.get('name').touched">El nombre es requerido</mat-error>
+      <mat-error *ngIf="formEmployee.get('name').errors?.minlength">Ingrese al menos tres caracteres</mat-error>
+      <mat-error *ngIf="formEmployee.get('name').errors?.pattern">Caracteres no válidos</mat-error>
     </mat-form-field>
 
     <mat-form-field>
       <input matInput type="date" placeholder="Edad" formControlName="age">
+      <mat-error *ngIf="formEmployee.get('age').errors?.required && formEmployee.get('age').touched">La fecha es requerida</mat-error>
+      <mat-error *ngIf="formEmployee.get('age').errors?.isYoung">Debe ser mayor a 18 años</mat-error>
     </mat-form-field>
-    <p>{{formEmployee.get("age").errors | json }}</p>
 
     <mat-form-field>
       <input matInput type="date" placeholder="Contratación" formControlName="hiring">
+      <mat-error *ngIf="formEmployee.get('hiring').errors?.required && formEmployee.get('hiring').touched">La fecha es requerida</mat-error>
     </mat-form-field>
 
     <mat-form-field>
@@ -23,16 +27,60 @@
           {{item}}
         </mat-option>
       </mat-select>
+      <mat-error *ngIf="formEmployee.get('country').errors?.required && formEmployee.get('country').touched">El país es requerido</mat-error>
     </mat-form-field>
 
     <mat-form-field>
       <input matInput placeholder="Nombre de usuario" formControlName="username">
+      <mat-error *ngIf="formEmployee.get('username').errors?.required && formEmployee.get('username').touched">El nombre de usuario es requerido</mat-error>
+    </mat-form-field>
+
+    <div>
+      Estado: 
+      <mat-slide-toggle color="primary" formControlName="status"></mat-slide-toggle>
+    </div>
+
+    <br><br>
+    <div>
+      <mat-radio-group aria-label="Select an option" formControlName="area" (change)="areaSelect($event)">
+        <mat-radio-button value="administration">Administración</mat-radio-button>
+        <mat-radio-button value="technology">Tecnología</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <mat-form-field>
+      <mat-label>Cargo</mat-label>
+      <mat-select formControlName="job">
+        <section *ngIf="areaAdministration">
+          <mat-option *ngFor="let item of arrayAdministration" [value]="item" (click)="jobSelect(item)">
+            {{item}}
+          </mat-option>
+        </section>
+
+        <section *ngIf="areaTechnology">
+          <mat-option *ngFor="let item of arrayTechnology" [value]="item" (click)="jobSelect(item)">
+            {{item}}
+          </mat-option>
+        </section>
+      </mat-select>
+      <mat-error *ngIf="formEmployee.get('job').errors?.required && formEmployee.get('job').touched">Seleccione un cargo</mat-error>
+    </mat-form-field>
+    
+    <mat-form-field *ngIf="founderAndCeo">
+      <mat-label>Comisión</mat-label>
+      <mat-select formControlName="commission">
+        <mat-option *ngFor="let item of arrayCommission" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="formEmployee.get('commission').errors?.required && formEmployee.get('commission').touched">Seleccione el valor de comisión</mat-error>
     </mat-form-field>
 
     <div>
       <button type="button" routerLink="/">Volver</button> 
-      <button type="submit">Guardar</button> 
+      <button type="submit" [disabled]="formEmployee.invalid">Guardar</button>
+      <!-- <button type="submit">Guardar</button>  -->
     </div>
-    
   </form>
 </section>
+<br><br><br><br><br><br>

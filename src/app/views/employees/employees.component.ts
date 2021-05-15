@@ -14,6 +14,12 @@ export class EmployeesComponent implements OnInit {
 
   formEmployee: FormGroup;
   dataCountryAll: [];
+  areaAdministration = true;
+  areaTechnology = false;
+  arrayAdministration = ['Fundador y CEO', 'Recursos Humanos'];
+  arrayTechnology = ['Programador', 'Diseñador'];
+  arrayCommission = ['0%','10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%'];
+  founderAndCeo = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,12 +28,24 @@ export class EmployeesComponent implements OnInit {
     private router: Router,
   ) {
     this.formEmployee = this.formBuilder.group({
-      name: [''],
-      age: ['', MyValidations.age],
-      hiring: [''],
-      job: [''],
-      username: [''],
-      country: ['']
+      name: ['', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
+      age: ['', [Validators.required, MyValidations.age]],
+      hiring: ['', Validators.required],
+      country: ['', Validators.required],
+      username: ['', Validators.required],
+      area: ['administration', Validators.required],
+      job: ['', Validators.required],
+      commission: [''],
+      status: [true, Validators.required]
+    });
+    /* Agregar de manera dinámica el validador en comisión */
+    this.formEmployee.get('job').valueChanges.subscribe(value => {
+      if (value === 'Fundador y CEO') {
+        this.formEmployee.get('commission').setValidators(Validators.required);
+      } else {
+        this.formEmployee.get('commission').clearValidators();
+        this.formEmployee.get('commission').reset();
+      }
     });
   }
 
@@ -36,13 +54,39 @@ export class EmployeesComponent implements OnInit {
   }
 
   getAllCountries() {
-    this.countriesService.getAll().then((response: any) => {    
+    this.countriesService.getAll().then((response: any) => {
       this.dataCountryAll = response.map(item => {
         return item.name;
       })
     }).catch(error => {
       console.log(error);
     })
+  }
+
+  areaSelect(item) {
+    if (item.value === 'administration') {
+      this.areaAdministration = true;
+      this.areaTechnology = false;
+      /* Si estoy en tecnología, y me paso directo a admin reinicio el control */
+      if (this.formEmployee.value.job === 'Diseñador' || this.formEmployee.value.job === 'Programador') {
+        this.formEmployee.get('job').patchValue(null);
+      }
+    } else if (item.value === 'technology') {
+      this.areaTechnology = true;
+      this.areaAdministration = false;
+      /* Si estoy en administración, en fundador CEO y me paso directo a tecnología, oculto comisión */
+      this.founderAndCeo = false;
+      this.formEmployee.value.commission = '';
+      this.formEmployee.get('job').patchValue(null);
+    }
+  }
+
+  jobSelect(item) {
+    if (item === 'Fundador y CEO') {
+      this.founderAndCeo = true;
+    } else {
+      this.founderAndCeo = false;
+    }
   }
 
   save(event: Event) {
@@ -52,13 +96,16 @@ export class EmployeesComponent implements OnInit {
         name: this.formEmployee.value.name,
         age: this.formEmployee.value.age,
         hiring: this.formEmployee.value.hiring,
+        area: this.formEmployee.value.area,
         job: this.formEmployee.value.job,
+        commission: this.formEmployee.value.commission,
         username: this.formEmployee.value.username,
         country: this.formEmployee.value.country,
+        status: this.formEmployee.value.status,
         dateCreate: new Date(),
         dateUpdate: new Date()
       }
-      console.log(employee, 'employee???');
+      console.log(employee, 'objeto a guardar en la bd');
       this.employeesService.saveEmployeeData(employee).then(result => {
         console.log('Usuario registrado');
         this.formEmployee.reset();
@@ -66,9 +113,6 @@ export class EmployeesComponent implements OnInit {
       }).catch(error => {
         console.log(error);
       })
-    } else {
-      console.log('Error');
-      this.formEmployee.markAllAsTouched();
     }
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { EmployeModel } from 'src/app/models/employe';
+import { EmployeeModel } from 'src/app/models/employe';
 import { EmployeesService } from 'src/app/services/employees.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class ListEmployeesComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   displayedColumns: string[] = ['name', 'age', 'hiring', 'transactions'];
-  dataSource = new MatTableDataSource<EmployeModel>();
+  dataSource = new MatTableDataSource<EmployeeModel>();
   datosFirebase: any[] = [];
   constructor(
     private employeesService: EmployeesService,

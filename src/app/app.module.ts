@@ -15,7 +15,9 @@ import {
   MatIconModule,
   MatInputModule,
   MatPaginatorModule,
+  MatRadioModule,
   MatSelectModule,
+  MatSlideToggleModule,
   MatSortModule,
   MatTooltipModule } 
 from '@angular/material';
@@ -32,10 +34,11 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    /* Firebase */
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     BrowserAnimationsModule,
-    /* Material */
+    /* Table and Form */
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
@@ -45,7 +48,12 @@ import { HttpClientModule } from '@angular/common/http';
     MatTooltipModule,
     ReactiveFormsModule,
     MatSelectModule,
+    /* Service http */
     HttpClientModule,
+    /* Status */
+    MatSlideToggleModule,
+    /* Radio */
+    MatRadioModule,
   ],
   exports: [],
   providers: [],

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MatPaginator } from '@angular/material';
 import { Observable } from 'rxjs';
+import { EmployeeModel } from '../models/employe';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class EmployeesService {
     private firebase: AngularFirestore,
   ) { }
 
-  saveEmployeeData(employeeObject: any): Promise<any> {
+  saveEmployeeData(employeeObject: EmployeeModel): Promise<any> {
     return this.firebase.collection('employees').add(employeeObject);
   }
 
