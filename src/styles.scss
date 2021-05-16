@@ -204,6 +204,95 @@ th {
   font-size: 12px;
 }
 /* ---------------- Paginador ------------------- */
+/* ------------ View: Employees List ------------ */
+
+/* ------------ View: Employee, Create and Update ------------ */
+/* Contenedor del formulario reactivo */
+.containerFormReactive {
+  background-color: aliceblue;
+  width: 90%;
+  border-radius: 5px;
+  margin: 5% auto;
+}
+
+/* Título del componente reutilizable */
+.titleEmployee {
+  font-family: 'Nova Flat', sans-serif;
+  text-align: center;
+  font-size: 17px;
+  padding-top: 10px;
+}
+
+/* Formulario */
+.formReactive {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 5%;
+}
+
+/* Items del formulario, formControlName */
+.containerFormReactiveItem {
+  width: 100%;
+  font-size: 15px;
+}
+
+.radioGroupText {
+  margin-top: 10px;
+  font-size: 15px;
+  text-align: center;
+}
+
+.radioGroup {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Depende si la variable está en true */
+.opacity {
+  opacity: 0.4;
+}
+
+/* Espacio top con el área */
+.marginTop {
+  margin-top: 2%;
+}
+
+/* Botones */
+.btnsOpctions {
+  margin-top: 2%;
+}
+
+.btnOptionReturn, .btnOptionSave {
+  height: 25px;
+  font-size: 10px;
+  border-radius: 5px;
+  border: 1px solid #fff;
+  color: #fff;
+  text-align: center;
+}
+
+.btnOptionReturn {
+  background-color: rgb(33, 127, 189);
+}
+
+.btnOptionSave {
+  background-color: rgb(20, 141, 60);
+}
+
+.addOptionText {
+  margin: 10px;
+}
+
+.btnsOpctionReturn {
+  display: inline;
+}
+
+.btnsOpctionSave {
+  display: inline;
+  margin-left: 10px;
+}
+/* ------------ View: Employee, Create and Update ------------ */
 
 /* *************************** Para Tablets y PC *************************** */
 @media screen and (min-width: 768px) {
@@ -245,7 +334,7 @@ th {
     padding-left: 20px !important;
     font-size: 16px !important;
   }
-.figureImgList
+  
   /* Sin el sort en trasacciones */
   .replace-sort {
     font-size: 16px !important;
@@ -297,6 +386,105 @@ th {
     height: 35px;
     font-size: 17px;
   }
+  /* ------------ View: Employees List ------------ */
+
+  /* ------------ View: Employee, Create and Update ------------ */
+  /* Título del componente reutilizable */
+  .titleEmployee {
+    font-size: 24px;
+    padding-top: 2%;
+  }
+
+  /* Formulario */
+  .formReactive {
+    margin-top: 30px;
+  }
+
+  /* Espaciado */
+  .radioGroupText {
+    margin-top: 0;
+  }
+
+  /* Grid responsive */
+  .gridControls {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 0 50px;
+  }
+
+  .gridEmployee:nth-child(1) {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+  }
+
+  .gridEmployee:nth-child(2) {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
+
+  .gridEmployee:nth-child(3) {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    grid-row-end: 4;
+  }
+
+  .gridEmployee:nth-child(4) {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 4;
+    grid-row-end: 5;
+  }
+
+  .gridEmployee:nth-child(5) {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+  }
+
+  .gridEmployee:nth-child(6) {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 5;
+    grid-row-end: 6;
+  }
+
+  .gridEmployee:nth-child(7) {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
+
+  .gridEmployee:nth-child(8) {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 4;
+  }
+
+  .gridEmployee:nth-child(9) {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 4;
+    grid-row-end: 5;
+  }
+
+  /* Botones */
+  .btnsOpctions {
+    margin-top: 0;
+  }
+   
+  .btnOptionReturn, .btnOptionSave {
+    height: 33px;
+    font-size: 15px;
+  }
+  /* ------------ View: Employee, Create and Update ------------ */
 }
 /* *************************** Para Tablets y PC *************************** */
-/* ------------ View: Employees List ------------ */

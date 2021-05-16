@@ -26,6 +26,7 @@ export class EmployeesComponent implements OnInit {
   getInformationFirebase: any;
   objectEmployee: any;
   viewInformation = true;
+  textViewDisabled = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -62,6 +63,7 @@ export class EmployeesComponent implements OnInit {
     }
     if (this.idView !== null) {
       this.titleEmployee = 'Ver Empleado';
+      this.textViewDisabled = true;
     }
   }
 
