@@ -1,16 +1,21 @@
-<section class="search">
-  <div class="searchTitle">
-    <p>Empleado: </p>
-  </div>
-  <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-addon1">
-      <i class="fas fa-search"></i>
-    </span>
-    <input type="text" class="form-control" placeholder="Buscar..." (keyup)="applyFilter($event.target.value)">
-  </div>
-</section>
+<h1 class="titleList">Administrar Empleados</h1>
+<figure class="figureImgList">
+  <img src="../../../assets/user-card.svg" alt="">
+</figure>
 
-<section>
+<section class="containerGeneralList">
+  <section class="search">
+    <div class="searchTitle">
+      <p>Empleado: </p>
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">
+        <i class="fas fa-search"></i>
+      </span>
+      <input type="text" class="form-control" placeholder="Buscar..." (keyup)="applyFilter($event.target.value)">
+    </div>
+  </section>
+  
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre <br> (cargo) </th>
@@ -51,11 +56,11 @@
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-</section>
 
-<section class="addUser">
-  <button type="button" class="btn btn-success letterUser" routerLink='/employees-create'>
-    <i class="fas fa-id-badge"></i>
-    <span class="margin">Crear nuevo empleado</span>
-  </button>
+  <section class="addUser">
+    <button type="button" routerLink='/employees-create' class="btnAddUser">
+      <i class="fas fa-id-badge"></i>
+      <span class="addUserText">Agregar</span>
+    </button>
+  </section>
 </section>
