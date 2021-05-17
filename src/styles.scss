@@ -25,6 +25,12 @@ body {
 
 /* ------------ View: Employees List ------------ */
 /* navbar */
+.sitiVisit {
+  font-weight: bold;
+  font-size: 11px;
+  color: #fff;
+}
+
 .siteMaggot {
   text-decoration: none;
   font-weight: bold;
@@ -315,6 +321,10 @@ th {
   /* ------------ View: Employees List ------------ */
   /* navbar */
   .siteMaggot {
+    font-size: 17px;
+  }
+  
+  .sitiVisit {
     font-size: 17px;
   }
   

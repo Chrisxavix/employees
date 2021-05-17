@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { EmployeeModel } from 'src/app/models/employe';
 import { EmployeesService } from 'src/app/services/employees.service';
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-employees',
@@ -58,15 +59,30 @@ export class ListEmployeesComponent implements OnInit {
 
   /* Eliminar Empleado */
   deleteEmployee(id: string) {
-    this.loading = true;
-    this.employeesService.deleteEmployee(id).then(() => {
-      console.log(id, 'eliminado');
-      this.loading = false;
-      this.toastr.success('Registro eliminado', 'Éxito', { progressBar: true, timeOut: 2000 });
-    }, (error) => {
-      this.loading = false;
-      this.toastr.error('Ups, intente más tarde', 'Error', { progressBar: true, timeOut: 2000 });
-      console.log(error, 'eliminación erronea');
+    Swal.fire({
+      title: '¿Eliminar el registro?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'rgb(194, 61, 61)',
+      confirmButtonText: 'SÍ',
+      cancelButtonColor: 'rgb(43, 95, 155)',
+      cancelButtonText: 'NO',
+    }).then(response => {
+      if (response.isConfirmed === true) {
+        this.loading = true;
+        this.employeesService.deleteEmployee(id).then(() => {
+          console.log(id, 'eliminado');
+          this.loading = false;
+          Swal.fire({ icon: 'success', title: 'Registro eliminado', showConfirmButton: false, timer: 2000 });
+        }, (error) => {
+          this.loading = false;
+          Swal.fire({ title: 'Error', text: 'Ups, intente más tarde', icon: 'error',  showConfirmButton: false,  timer: 2500 });
+          console.log(error, 'eliminación erronea');
+        })
+      }
+    }).catch(error => {
+      console.log(error, 'Error Sweet');
+      Swal.fire({ title: 'Error',  text: 'Ups, intente más tarde', icon: 'error', showConfirmButton: false, timer: 2500 });
     })
   }
 

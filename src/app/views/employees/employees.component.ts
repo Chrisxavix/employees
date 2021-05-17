@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CountriesService } from 'src/app/services/countries.service';
 import { EmployeesService } from 'src/app/services/employees.service';
 import { MyValidations } from 'src/app/utils/age-validation';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-employees',
@@ -143,9 +144,9 @@ export class EmployeesComponent implements OnInit {
         this.formEmployee.reset();
         this.router.navigate(['/employees-list']);
         this.loading = false;
-        this.toastr.success('Registro creado', 'Éxito', { progressBar: true, timeOut: 2000 });
+        Swal.fire({ icon: 'success', title: 'Registro creado', showConfirmButton: false, timer: 2000 });
       }).catch(error => {
-        this.toastr.error('Ups, intente más tarde', 'Error', { progressBar: true, timeOut: 2000 });
+        Swal.fire({ title: 'Error', text: 'Ups, intente más tarde', icon: 'error', showConfirmButton: false, timer: 2500 });
         this.loading = false;
         console.log(error);
       })
@@ -160,11 +161,11 @@ export class EmployeesComponent implements OnInit {
       this.employeesService.updateEmployee(id, this.objectEmployee).then(response => {
         this.router.navigate(['/employees-list']);
         this.loading = false;
-        this.toastr.success('Registro actualizado', 'Éxito', { progressBar: true, timeOut: 2000 });
+        Swal.fire({ icon: 'success', title: 'Registro actualizado', showConfirmButton: false, timer: 2000 });
       }).catch(error => {
         this.loading = false;
         console.log(error, 'Error');
-        this.toastr.error('Ups, intente más tarde', 'Error', { progressBar: true, timeOut: 2000 });
+        Swal.fire({ title: 'Error', text: 'Ups, intente más tarde', icon: 'error', showConfirmButton: false, timer: 2500 });
       })
     }
   }
