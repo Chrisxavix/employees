@@ -21,7 +21,7 @@
       </mat-form-field>
   
       <mat-form-field class="containerFormReactiveItem gridEmployee">
-        <mat-label>Seleccione un país</mat-label>
+        <mat-label>País</mat-label>
         <mat-select formControlName="country">
           <mat-option *ngFor="let item of dataCountryAll" [value]="item">
             {{item}}
@@ -53,7 +53,7 @@
       </section>
   
       <mat-form-field class="containerFormReactiveItem marginTop gridEmployee">
-        <mat-label>Seleccione el cargo</mat-label>
+        <mat-label>Cargo</mat-label>
         <mat-select formControlName="job">
           <section *ngIf="areaAdministration">
             <mat-option *ngFor="let item of arrayAdministration" [value]="item" (click)="jobSelect(item)">
@@ -71,7 +71,7 @@
       </mat-form-field>
       
       <mat-form-field class="containerFormReactiveItem gridEmployee" *ngIf="founderAndCeo">
-        <mat-label>Seleccione la comisión</mat-label>
+        <mat-label>Comisión</mat-label>
         <mat-select formControlName="commission">
           <mat-option *ngFor="let item of arrayCommission" [value]="item">
             {{item}}
