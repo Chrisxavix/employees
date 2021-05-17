@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { EmployeeModel } from 'src/app/models/employe';
 import { EmployeesService } from 'src/app/services/employees.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list-employees',
@@ -21,6 +22,7 @@ export class ListEmployeesComponent implements OnInit {
 
   constructor(
     private employeesService: EmployeesService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -60,8 +62,10 @@ export class ListEmployeesComponent implements OnInit {
     this.employeesService.deleteEmployee(id).then(() => {
       console.log(id, 'eliminado');
       this.loading = false;
+      this.toastr.success('Registro eliminado', 'Éxito', { progressBar: true, timeOut: 2000 });
     }, (error) => {
       this.loading = false;
+      this.toastr.error('Ups, intente más tarde', 'Error', { progressBar: true, timeOut: 2000 });
       console.log(error, 'eliminación erronea');
     })
   }

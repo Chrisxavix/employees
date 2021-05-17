@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { CountriesService } from 'src/app/services/countries.service';
 import { EmployeesService } from 'src/app/services/employees.service';
 import { MyValidations } from 'src/app/utils/age-validation';
@@ -35,6 +36,7 @@ export class EmployeesComponent implements OnInit {
     private countriesService: CountriesService,
     private router: Router,
     private routeActivate: ActivatedRoute,
+    private toastr: ToastrService,
   ) {
     this.formEmployee = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3), Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
@@ -138,11 +140,12 @@ export class EmployeesComponent implements OnInit {
         dateCreate: new Date()
       }
       this.employeesService.saveEmployeeData(object).then(result => {
-        console.log('Usuario registrado');
         this.formEmployee.reset();
         this.router.navigate(['/employees-list']);
         this.loading = false;
+        this.toastr.success('Registro creado', 'Éxito', { progressBar: true, timeOut: 2000 });
       }).catch(error => {
+        this.toastr.error('Ups, intente más tarde', 'Error', { progressBar: true, timeOut: 2000 });
         this.loading = false;
         console.log(error);
       })
@@ -155,12 +158,13 @@ export class EmployeesComponent implements OnInit {
       this.loading = true;
       this.createObject();
       this.employeesService.updateEmployee(id, this.objectEmployee).then(response => {
-        console.log('Actualizado');
         this.router.navigate(['/employees-list']);
         this.loading = false;
+        this.toastr.success('Registro actualizado', 'Éxito', { progressBar: true, timeOut: 2000 });
       }).catch(error => {
         this.loading = false;
         console.log(error, 'Error');
+        this.toastr.error('Ups, intente más tarde', 'Error', { progressBar: true, timeOut: 2000 });
       })
     }
   }
@@ -199,6 +203,7 @@ export class EmployeesComponent implements OnInit {
         this.viewInformation = false;
         this.loading = false;
       }, (error) => {
+        this.toastr.error('Ups, intente más tarde', 'Error', { progressBar: true, timeOut: 2000 });
         this.loading = false;
         console.log(error, 'Error');
       })

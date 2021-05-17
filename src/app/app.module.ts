@@ -24,6 +24,7 @@ import {
 from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,10 @@ import { HttpClientModule } from '@angular/common/http';
     MatRadioModule,
     /* Loading */
     MatProgressSpinnerModule,
+    /* Notificaciones */
+    ToastrModule.forRoot({
+      preventDuplicates: true
+    }), 
   ],
   exports: [],
   providers: [],
