@@ -17,6 +17,8 @@ export class ListEmployeesComponent implements OnInit {
   displayedColumns: string[] = ['name', 'age', 'hiring', 'transactions'];
   dataSource = new MatTableDataSource<EmployeeModel>();
   datosFirebase: any[] = [];
+  loading = false;
+
   constructor(
     private employeesService: EmployeesService,
   ) { }
@@ -29,6 +31,7 @@ export class ListEmployeesComponent implements OnInit {
   }
 
   getEmployees() {
+    this.loading = true;
     this.employeesService.getDataOrderForDateCreate().subscribe((response: any) => {
       /* Limpiar el array de datos, ya que se pueden duplicar si se eliminan desde firebase */
       this.datosFirebase = [];
@@ -44,16 +47,21 @@ export class ListEmployeesComponent implements OnInit {
       })
       this.dataSource.data = this.datosFirebase;
       console.log(this.dataSource.data, 'DATA');
+      this.loading = false;
     }, (error) => {
+      this.loading = false;
       console.log('Error:', error);
     })
   }
 
   /* Eliminar Empleado */
   deleteEmployee(id: string) {
+    this.loading = true;
     this.employeesService.deleteEmployee(id).then(() => {
       console.log(id, 'eliminado');
+      this.loading = false;
     }, (error) => {
+      this.loading = false;
       console.log(error, 'eliminación erronea');
     })
   }

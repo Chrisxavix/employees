@@ -3,6 +3,10 @@
   <img src="../../../assets/user-card.svg" alt="">
 </figure>
 
+<div class="contaierLoading" *ngIf="loading">
+  <mat-spinner class="loading"></mat-spinner>
+</div>
+
 <section class="containerGeneralList">
   <section class="search">
     <div class="searchTitle">
@@ -64,3 +68,4 @@
     </button>
   </section>
 </section>
+<br>

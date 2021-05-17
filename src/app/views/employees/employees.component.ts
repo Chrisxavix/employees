@@ -27,6 +27,7 @@ export class EmployeesComponent implements OnInit {
   objectEmployee: any;
   viewInformation = true;
   textViewDisabled = false;
+  loading = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -131,12 +132,18 @@ export class EmployeesComponent implements OnInit {
   /* Crear el empleado */
   createEmployee() {
     if (this.formEmployee.valid) {
-      this.createObject();
-      this.employeesService.saveEmployeeData(this.objectEmployee).then(result => {
+      this.loading = true;
+      const object = {
+        ...this.createObject(),
+        dateCreate: new Date()
+      }
+      this.employeesService.saveEmployeeData(object).then(result => {
         console.log('Usuario registrado');
         this.formEmployee.reset();
         this.router.navigate(['/employees-list']);
+        this.loading = false;
       }).catch(error => {
+        this.loading = false;
         console.log(error);
       })
     }
@@ -145,11 +152,14 @@ export class EmployeesComponent implements OnInit {
   /* Actualizar registro */
   updateEmployee(id: string) {
     if (this.formEmployee.valid) {
+      this.loading = true;
       this.createObject();
       this.employeesService.updateEmployee(id, this.objectEmployee).then(response => {
         console.log('Actualizado');
         this.router.navigate(['/employees-list']);
+        this.loading = false;
       }).catch(error => {
+        this.loading = false;
         console.log(error, 'Error');
       })
     }
@@ -158,10 +168,13 @@ export class EmployeesComponent implements OnInit {
   /* Setea los datos para la ruta de actualizar */
   getEmployee() {
     if (this.id !== null) {
+      this.loading = true;
       this.employeesService.getEmployee(this.id).subscribe(response => {
         this.getInformationFirebase = response;
         this.getDataFirebase();
+        this.loading = false;
       }, (error) => {
+        this.loading = false;
         console.log(error, 'Error');
       })
     }
@@ -170,6 +183,7 @@ export class EmployeesComponent implements OnInit {
   /* Setea los datos para la ruta de ver */
   viewEmployee() {
     if (this.idView !== null) {
+      this.loading = true;
       this.employeesService.getEmployee(this.idView).subscribe(response => {
         this.getInformationFirebase = response;
         this.getDataFirebase();
@@ -183,7 +197,9 @@ export class EmployeesComponent implements OnInit {
         this.formEmployee.controls['country'].disable();
         this.formEmployee.controls['status'].disable();
         this.viewInformation = false;
+        this.loading = false;
       }, (error) => {
+        this.loading = false;
         console.log(error, 'Error');
       })
     }
@@ -201,9 +217,9 @@ export class EmployeesComponent implements OnInit {
       username: this.formEmployee.value.username,
       country: this.formEmployee.value.country,
       status: this.formEmployee.value.status,
-      dateCreate: new Date(),
       dateUpdate: new Date()
     }
+    return this.objectEmployee;
   }
 
   /* Trae los datos de Firebase de acuerdo al id para setear el formulario */

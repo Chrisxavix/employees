@@ -15,6 +15,7 @@ import {
   MatIconModule,
   MatInputModule,
   MatPaginatorModule,
+  MatProgressSpinnerModule,
   MatRadioModule,
   MatSelectModule,
   MatSlideToggleModule,
@@ -54,6 +55,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatSlideToggleModule,
     /* Radio */
     MatRadioModule,
+    /* Loading */
+    MatProgressSpinnerModule,
   ],
   exports: [],
   providers: [],
