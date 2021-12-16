@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class CountriesService {
 
-  baseUrl = 'https://restcountries.eu/rest/v2/all';
+  baseUrl = 'https://restcountries.com/v3.1/all';
 
   constructor(
     private httpClient: HttpClient,

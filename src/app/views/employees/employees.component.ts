@@ -81,7 +81,7 @@ export class EmployeesComponent implements OnInit {
   getAllCountries() {
     this.countriesService.getAll().then((response: any) => {
       this.dataCountryAll = response.map(item => {
-        return item.name;
+        return item.name.common;
       })
     }).catch(error => {
       console.log(error);
